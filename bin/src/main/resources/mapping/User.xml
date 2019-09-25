@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springBootDemo.dao.user.UserDao" >
+	<sql id="page">
+		limit #{begin},#{pageSize} 
+	</sql>
+
+	<insert id="addUserPhoto" parameterType="com.example.springBootDemo.entity.po.user.UserPhotoPO">
+		insert into u_user_photo (user_sn , img_url,  create_dt,	 	create_tm )
+		values (#{userSn},	#{imgUrl},	#{createDt},		#{createTm})
+	</insert>
+	
+	<select id="queryUserPhotosByUserSn" parameterType="java.util.Map" resultType="com.example.springBootDemo.entity.vo.user.UserPhotoVO">
+		select p.up_id upId,		p.user_sn userSn,	p.img_url imgUrl,	p.create_dt createDt,	p.create_tm createTm
+		from u_user_photo p 
+		where p.user_sn = #{userSn} and p.is_deleted = 'N'
+		order by p.up_id desc 
+		<include refid="page"/>
+	</select>
+	
+	<select id="queryUserPhotosByUserSnTotals" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1)
+		from u_user_photo p 
+		where p.user_sn = #{userSn} and p.is_deleted = 'N'
+		order by p.up_id desc 
+	</select>
+	
+	<update id="editUserInfo" parameterType="com.example.springBootDemo.entity.po.user.UserInfoPO" >
+		update u_user_info ui 
+		set ui.user_nick = #{userNick},
+			ui.desc = #{descripet},
+			ui.sex=#{sex},
+			ui.status=#{status},
+			ui.head_url = #{headUrl}
+		where ui.user_sn = #{userSn}	
+	</update>
+	
+	<select id="queryUserInfoByUserSn" resultType="com.example.springBootDemo.entity.vo.user.UserInfoVO">
+		select 
+		ui.user_sn userSn,	ui.account account,	ui.user_nick userNick,	ui.pwd pwd,	ui.sex sex,	
+		ui.desc descripet,	ui.head_url headUrl,		ui.status status
+		from u_user_info  ui
+		where ui.user_sn = #{userSn}
+	</select>
+		
+		
+		
+		
+</mapper>

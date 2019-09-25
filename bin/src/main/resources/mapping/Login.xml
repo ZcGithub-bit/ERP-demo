@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springBootDemo.dao.login.LoginDao" >
+	
+	<select id="queryUserInfoByAccountAndPwd" resultType="com.example.springBootDemo.entity.vo.user.UserInfoVO">
+		select 
+		ui.user_sn userSn,	ui.account account,	ui.user_nick userNick,	ui.pwd pwd,	ui.sex sex,	
+		ui.desc descripet ,	ui.head_url headUrl,		ui.status status
+		from u_user_info  ui
+		where ui.account = #{account} and ui.pwd = #{pwd} 
+	</select>
+	
+	
+	
+</mapper>
